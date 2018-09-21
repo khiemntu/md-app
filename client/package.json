@@ -1,0 +1,107 @@
+{
+  "name": "cm-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "animejs": "^2.2.0",
+    "axios": "^0.18.0",
+    "css-loader": "^1.0.0",
+    "lodash": "^4.17.10",
+    "material-design-icons-iconfont": "^3.0.3",
+    "moment": "^2.22.2",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "socket.io-client": "^2.1.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "toastr": "^2.1.4",
+    "vue": "^2.5.16",
+    "vue-drag-select": "^0.1.5",
+    "vue-loader": "^15.2.6",
+    "vue-perfect-scrollbar": "^0.1.0",
+    "vue-router": "^3.0.1",
+    "vue-style-loader": "^4.1.1",
+    "vuetify": "^1.2.3",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-rc.5",
+    "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
+    "@vue/cli-service": "^3.0.0-rc.5",
+    "@vue/eslint-config-prettier": "^3.0.0-rc.5",
+    "lint-staged": "^7.2.0",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/prettier"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "vue/html-quotes": [
+        "error",
+        "double"
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "trailingComma": "none",
+          "singleQuote": true
+        }
+      ],
+      "vue/html-end-tags": "error",
+      "vue/html-indent": [
+        "error",
+        2
+      ],
+      "vue/html-self-closing": "error",
+      "vue/require-default-prop": "error",
+      "vue/require-prop-types": "error",
+      "vue/attributes-order": "error",
+      "vue/order-in-components": "error",
+      "vue/attribute-hyphenation": [
+        "error",
+        "always"
+      ]
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}
