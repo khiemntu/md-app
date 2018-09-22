@@ -7,7 +7,7 @@ import Label from '../modules/label';
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   linkActiveClass: 'open active',
   routes: [
     {
@@ -23,8 +23,9 @@ const router = new Router({
       }
     },
     {
-      path: '/label',
+      path: '/labeling',
       name: 'Label',
+      alias: '/nowyouseeme',
       component: Label,
       meta: {
         title: 'Label'

@@ -27,7 +27,19 @@
           <v-btn :disabled="!!!select || selectedArray.length == 0" flat dark large depressed class="m-btn-move" @click.native="move()"><v-icon left>input</v-icon> Move to&nbsp;<span>{{select}}</span>&nbsp;folder</v-btn>
           <v-btn :disabled="selectedArray.length == 0" flat dark large depressed @click.native="clearSelected()"><v-icon left>refresh</v-icon> Clear selection</v-btn>
           <v-btn :disabled="selectedArray.length == 0"  flat dark large depressed @click.native="handleShowDialog()"><v-icon left>delete_sweep</v-icon> Delete {{selectedArray.length ? selectedArray.length : ''}} item{{selectedArray.length > 1 ? 's' : ''}}</v-btn>
-        </v-flex>      
+        </v-flex>
+        <v-flex xs2 class="text-lg-right">
+          <v-btn disabled class="{'indigo darken-4" dark large depressed flat>
+            <v-icon left>memory</v-icon>
+            Training
+          </v-btn>
+        </v-flex>    
+        <!-- <v-flex xs2 class="text-lg-right">
+          <v-btn :class="{'indigo darken-4 m-indigo-text': folder != this.uf, 'blue darken-3': folder == this.uf}" dark large depressed @click="selectUnknownFolder()">
+            <v-icon left>face</v-icon>
+            unknown people &nbsp;<span style="color: yellow">{{total_uf.toLocaleString()}}</span>
+          </v-btn>
+        </v-flex>     -->
       </v-toolbar>
       <v-content>
         <v-container fluid>
@@ -89,13 +101,15 @@ export default {
   },
   data() {
     return {
+      // uf: '00Unknown',
+      // total_uf: 0,
       drawer: true,
       folder: '', //selected folder
       page: 1,
       fileArray: [], // list image display
       itemPerPage: 50,
       pageLength: 1,
-      totalFile: 0, // total images display
+      totalFile: 0, // total images in folder
       selectedArray: [], // selected items
       // for autocomplete
       loading: false,
@@ -116,10 +130,10 @@ export default {
   watch: {
     dragItems(newValue, oldValue) {
       if (newValue != oldValue) {
-        this.selectedArray = [];
-        for (let i = 0; i < this.fileArray.length; i++) {
-          this.fileArray[i].selected = false;
-        }
+        // this.selectedArray = [];
+        // for (let i = 0; i < this.fileArray.length; i++) {
+        //   this.fileArray[i].selected = false;
+        // }
         for (let i = 0; i < this.dragItems.length; i++) {
           const item = this.dragItems[i];
           const idx = _.findIndex(
@@ -129,6 +143,7 @@ export default {
           if (idx > -1) {
             this.fileArray[idx].selected = true;
             this.selectedArray.push(this.fileArray[idx]);
+            this.selectedArray = _.uniqBy(this.selectedArray, 'name');
           }
         }
       }
@@ -156,6 +171,24 @@ export default {
       'removeFiles',
       'moveFiles'
     ]),
+    // async selectUnknownFolder() {
+    //   this.page = 1;
+    //   await this.getFilesInFolder({
+    //     folder: this.uf,
+    //     page: this.page,
+    //     itemPerPage: this.itemPerPage
+    //   });
+    //   this.folder = this.uf;
+    //   this.total_uf = this.files.length;
+    //   // eslint-disable-next-line
+    //   console.log(this.total_uf);
+    //   this.pageLength =
+    //     parseInt(this.total_uf / this.itemPerPage) +
+    //     (this.total_uf % this.itemPerPage ? 1 : 0);
+
+    //   this.select = ''; //data.folder;
+    //   this.selectedArray = [];
+    // },
     resetViewData(deleteArray) {
       // update total file and page length
       this.totalFile -= deleteArray.length;
@@ -287,7 +320,12 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-
+.m-indigo-text {
+  color: #6a74d4 !important;
+  span {
+    color: #6a74d4 !important;
+  }
+}
 .m-check-icon {
   margin: 6px;
   color: #fff;
@@ -300,7 +338,7 @@ export default {
   cursor: pointer;
 }
 .m-flex.m-active:hover {
-  outline: 3px solid #000000;
+  outline: 3px solid #2f5fc5;
   cursor: pointer;
 }
 .m-card {
@@ -311,7 +349,7 @@ export default {
 }
 .m-active {
   // outline: 5px solid #90caf9;
-  outline: 3px solid #223344;
+  outline: 3px solid #407cff;
 }
 .m-footer {
   height: 60px !important;

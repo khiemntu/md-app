@@ -7,13 +7,13 @@
   >
     <v-toolbar color="indigo darken-2" flat dark>
       <v-flex class="text-lg-right">
-        <v-btn v-if="!showInputFolder" flat @click.native="showInputFolder = true"><v-icon left>add</v-icon>NEW FOLDER</v-btn>
+        <v-btn v-if="!showInputFolder" flat @click.native="showInputFolder = true"><v-icon left>create_new_folder</v-icon>NEW FOLDER</v-btn>
         <v-text-field
           v-if="showInputFolder"
           v-model="newFolderName"
           class="m-text-field"
           label="Folder name..."
-          append-icon="add"
+          append-icon="create_new_folder"
           append-outer-icon="visibility_off"
           single-line
           clearable
@@ -34,10 +34,11 @@
     </v-toolbar>
     <vue-perfect-scrollbar :settings="scrollSettings" class="drawer-menu--scroll">
       <v-list subheader expand>
-        <v-list-tile v-for="item in filteredItem"  :key="item.name" :class="{'m-active': folderActive == item.name}" avatar
+        <v-list-tile v-for="item in filteredItem" :key="item.name" :class="{'m-active': folderActive == item.name}" avatar
                      @click="selectFolder(item)">
           <v-list-tile-avatar size="35" class="m-avatar">
-            <img v-if="item.avatar" :src="item.avatar">
+            <img v-if="item.avatar && item.name !='00Unknown'" :src="item.avatar">
+            <img v-if="item.name =='00Unknown'" :src="require('assets/images/people.png')">
             <!-- <v-icon v-if="!item.avatar" class="m-folder-icon">folder</v-icon> -->
           </v-list-tile-avatar>
           <!-- <v-icon class="m-folder-icon">folder</v-icon> -->
@@ -48,7 +49,7 @@
           <v-list-tile-action>
             <span class="grey--text m-total-file">{{item.totalFile.toLocaleString()}} Item{{parseInt(item.totalFile) > 1 ? 's' : ''}}</span>
           </v-list-tile-action>
-          <v-btn flat icon><v-icon class="m-delete" dark @click.native="handleShowDialog()">delete_outline</v-icon></v-btn>
+          <v-btn flat icon><v-icon v-if="item.name != '00Unknown'" class="m-delete" dark @click.native="handleShowDialog()">delete_outline</v-icon></v-btn>
         </v-list-tile>
       </v-list>
     </vue-perfect-scrollbar>

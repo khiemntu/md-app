@@ -10,7 +10,7 @@ FOLDER_DIR = process.env.FOLDER;
 
 router.post('/folders', async (req, res) => {
 	folders = fs.readdirSync(FOLDER_DIR)
-	folders = folders.filter(f => f != '.DS_Store' && f != '00Unknown')
+	folders = folders.filter(f => f != '.DS_Store') // && f != '00Unknown')
 	folders.sort()
 	folders = folders.map((item) => ({
 		name: item
@@ -94,10 +94,14 @@ router.post('/moveFiles', async (req, res) => {
 	const { from, to, files } = req.body;
 	const from_dir = `${FOLDER_DIR}/${from}`;
 	const to_dir = `${FOLDER_DIR}/${to}`;
-	for(let i=0; i < files.length; i++) {
-		fse.moveSync(`${from_dir}/${files[i]}`, `${to_dir}/${files[i]}`, { overwrite: true });
+	if (from != to) {
+		for(let i=0; i < files.length; i++) {
+			fse.moveSync(`${from_dir}/${files[i]}`, `${to_dir}/${files[i]}`, { overwrite: true });
+		}
+		res.json({ data: 'OK'});
+	} else {
+		res.sendStatus(403);
 	}
-	res.json({ data: 'OK'});
 });
 
 
