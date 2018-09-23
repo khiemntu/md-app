@@ -1,5 +1,9 @@
 <template>
   <div class="m-container">
+    <div class="m-background">
+      <div class="m-background-overlay"/>
+      <img src="~assets/images/panel.jpg">
+    </div>
     <div id="md-12" class="hide">
       <table>
         <tr class="row-1"><td><h1>{{prefix}} <span class="name">{{name}} </span></h1></td></tr>
@@ -128,6 +132,7 @@ export default {
       }
     });
   },
+  mounted() {},
   methods: {
     ...mapActions('home', ['getList'])
   }
@@ -135,6 +140,19 @@ export default {
 </script>
 
 <style scoped>
+img {
+  height: 100%;
+  width: auto;
+}
+.m-background {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background: black;
+  text-align: center;
+  overflow: hidden;
+}
 .m-container {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
